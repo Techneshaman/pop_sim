@@ -1,49 +1,6 @@
 from objects_list.food import Food, NoFood
 from objects_list.citizen import Citizen
-
-
-class Tile:
-    def __init__(self, x=0, y=0):
-        self.contents = '0'
-        self.x_coord = x
-        self.y_coord = y
-
-    def spawn_object(self, new_object):
-        self.contents = new_object
-
-    def destroy_object(self):
-        self.contents = '0'
-
-    def print_content(self):
-        print(self.contents)
-
-    def get_content(self):
-        return self.contents
-
-
-class WorldMap:
-    def __init__(self):
-        self.height = 5
-        self.width = 5
-        self.citizens_to_spawn = 5
-        self.food_per_cycle = 2
-        self.board = []
-
-    def generate_board(self):
-        for y in range(self.height):
-            next_row = []
-            for x in range(self.width):
-                next_row.append(Tile(x, y))
-            self.board.append(next_row)
-
-    def print_board(self):
-        printable = ''
-        for row in self.board:
-            for tile in row:
-                contents = tile.get_content()
-                printable += contents
-            printable += '\n'
-        print(printable)
+from world_map.world_map import WorldMap
 
 
 class PopulationSimulation:
@@ -67,6 +24,8 @@ class PopulationSimulation:
         self.world_map = WorldMap()
         self.world_map.generate_board()
 
+    def populate_world(self):
+        pass
     def get_food_item(self):
         if len(self.food_list) == 0:
             return NoFood()

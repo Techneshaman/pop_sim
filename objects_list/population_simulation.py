@@ -4,18 +4,21 @@ from objects_list.citizen import Citizen
 
 class Tile:
     def __init__(self, x=0, y=0):
-        self.contents = {}
+        self.contents = '0'
         self.x_coord = x
         self.y_coord = y
 
-    def spawn_object(self, object_id, new_object):
-        self.contents[object_id] = new_object
+    def spawn_object(self, new_object):
+        self.contents = new_object
 
-    def destroy_object(self, object_id):
-        del self.contents[object_id]
+    def destroy_object(self):
+        self.contents = '0'
 
     def print_content(self):
         print(self.contents)
+
+    def get_content(self):
+        return self.contents
 
 
 class WorldMap:
@@ -30,12 +33,18 @@ class WorldMap:
         for y in range(self.height):
             next_row = []
             for x in range(self.width):
-               next_row.append(Tile(x, y))
+                next_row.append(Tile(x, y))
+            self.board.append(next_row)
 
     def print_board(self):
+        printable = ''
         for row in self.board:
             for tile in row:
-                tile.print_content()
+                contents = tile.get_content()
+                printable += contents
+            printable += '\n'
+        print(printable)
+
 
 class PopulationSimulation:
     def __init__(self):
@@ -44,7 +53,7 @@ class PopulationSimulation:
         self.cycles_to_simulate = 5
         self.food_list = []
         self.pop_list = []
-        self.world_map = WorldMap()
+        self.spawn_world_map()
         self.spawn_initial_population()
         self.spawn_initial_food()
 
@@ -53,6 +62,10 @@ class PopulationSimulation:
 
     def spawn_initial_food(self):
         self.food_list = [Food() for i in range(self.food_per_cycle)]
+
+    def spawn_world_map(self):
+        self.world_map = WorldMap()
+        self.world_map.generate_board()
 
     def get_food_item(self):
         if len(self.food_list) == 0:

@@ -1,4 +1,4 @@
-class Food:
+class Food(object):
     def __init__(self):
         self.energetic_value = 10
 

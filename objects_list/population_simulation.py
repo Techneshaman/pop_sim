@@ -12,10 +12,11 @@ class PopulationSimulation:
         self.pop_list = []
         self.spawn_world_map()
         self.spawn_initial_population()
+        self.populate_world()
         self.spawn_initial_food()
 
     def spawn_initial_population(self):
-        self.pop_list = [Citizen() for i in range(self.citizens_to_spawn)]
+        self.pop_list = [Citizen('x') for i in range(self.citizens_to_spawn)]
 
     def spawn_initial_food(self):
         self.food_list = [Food() for i in range(self.food_per_cycle)]
@@ -25,7 +26,9 @@ class PopulationSimulation:
         self.world_map.generate_board()
 
     def populate_world(self):
-        pass
+        for citizen in self.pop_list:
+            self.world_map.place_citizen(citizen.get_name())
+
     def get_food_item(self):
         if len(self.food_list) == 0:
             return NoFood()

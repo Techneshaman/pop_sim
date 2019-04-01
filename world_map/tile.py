@@ -1,4 +1,4 @@
-class Tile:
+class Tile(object):
     def __init__(self, x=0, y=0):
         self.contents = '0'
         self.x_coord = x

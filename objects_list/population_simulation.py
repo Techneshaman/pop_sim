@@ -14,6 +14,9 @@ class Tile:
     def destroy_object(self, object_id):
         del self.contents[object_id]
 
+    def print_content(self):
+        print(self.contents)
+
 
 class WorldMap:
     def __init__(self):
@@ -29,6 +32,11 @@ class WorldMap:
             for x in range(self.width):
                next_row.append(Tile(x, y))
 
+    def print_board(self):
+        for row in self.board:
+            for tile in row:
+                tile.print_content()
+
 class PopulationSimulation:
     def __init__(self):
         self.citizens_to_spawn = 5
@@ -36,6 +44,7 @@ class PopulationSimulation:
         self.cycles_to_simulate = 5
         self.food_list = []
         self.pop_list = []
+        self.world_map = WorldMap()
         self.spawn_initial_population()
         self.spawn_initial_food()
 
@@ -73,3 +82,5 @@ class PopulationSimulation:
         print('FOOD OVERVIEW ON CYCLE %s' % self.cycles_to_simulate)
         for food in self.food_list:
             print(food.get_food_state())
+        print('BOARD:')
+        self.world_map.print_board()
